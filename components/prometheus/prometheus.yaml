@@ -1,0 +1,41 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    app.kubernetes.io/name: prometheus
+    prometheus: k8s
+  name: k8s
+  namespace: monitoring
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: k3sserver2
+  image: quay.io/prometheus/prometheus:v2.42.0
+  containers:
+  - name: prometheus
+    args:
+    - '--config.file=/etc/prometheus/config_out/prometheus.env.yaml'
+    - '--storage.agent.path=/prometheus'
+    - '--enable-feature=agent'
+    - '--web.enable-lifecycle'
+  externalLabels:
+    monitoring_group_agent: external_label
+  remoteWrite:
+    - url: url
+      remoteTimeout: "5s"
+  replicas: 1
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  serviceAccountName: prometheus-k8s
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector: {}
+  podMonitorNamespaceSelector: {}
+  podMonitorSelector: {}
+  additionalScrapeConfigs:
+    name: prometheus-conf
+    key: prometheus-config.yaml

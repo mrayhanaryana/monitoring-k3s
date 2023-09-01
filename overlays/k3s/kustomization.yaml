@@ -1,0 +1,35 @@
+bases:
+  - ../common
+
+patches:
+- patch: |
+    - op: replace
+      path: /metadata/name
+      value: prome-nuc
+  target:
+    kind: Prometheus
+    name: k8s
+
+- patch: |
+    - op: replace
+      path: /spec/selector/prometheus
+      value: prome-k3s-nuc
+  target:
+    kind: Service
+    name: prometheus-k8s
+
+- patch: |
+    - op: replace
+      path: /spec/externalLabels/monitoring_group_agent
+      value: nuc
+  target:
+    kind: Prometheus
+    name: k8s
+
+- patch: |
+    - op: replace
+      path: /spec/remoteWrite/0/url
+      value: http://172.20.2.229:9090/api/v1/write
+  target:
+    kind: Prometheus
+    name: k8s

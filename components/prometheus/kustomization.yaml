@@ -1,0 +1,12 @@
+resources:
+  - sa-rbac.yaml
+  - prometheus.yaml
+  - service.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+secretGenerator:
+- name: prometheus-conf
+  namespace: monitoring
+  files:
+    - prometheus-config.yaml

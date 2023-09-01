@@ -1,0 +1,9 @@
+resources:
+  - alertmanager-config.yaml
+  - alertmanager.yaml
+  - podmonitor.yaml
+  - probe.yaml
+  - prometheus.yaml
+  - prometheusrule.yaml
+  - servicemonitor.yaml
+  - thanosruler.yaml

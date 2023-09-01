@@ -1,0 +1,8 @@
+bases:
+  - ../../base
+
+resources:
+  - ../../components/kube-state-metrics
+  - ../../components/prometheus-operator
+  - ../../components/prometheus
+  # - ../../components/pod-monitor
